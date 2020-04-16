@@ -1,0 +1,10 @@
+.recommend-list-container {
+  padding-top: 20px;
+
+  .content-box {
+    display: grid;
+    grid-template: repeat(2, 1fr) / repeat(3, 1fr);
+    row-gap: 16px;
+    column-gap: 2px;
+  }
+}
