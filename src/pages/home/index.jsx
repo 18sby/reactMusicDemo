@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { Route } from 'react-router-dom';
+import { useHistory } from 'react-router';
 import '../../styles/pages/home/index.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMusic } from '@fortawesome/free-solid-svg-icons'
@@ -6,15 +8,25 @@ import { TopTab } from '../../components/home/top-tab';
 import { ListTitle } from '../../components/home/list-title';
 import { NewMusicItem } from '../../components/home/newMusicItem';
 import { RecommendList } from '../../components/home/recommend-list';
-import { apiRecommendList, apiNewSongs } from '../../service/apiStore/music';
+import { HotList } from '../../components/home/hot-list';
+import { apiRecommendList } from '../../service/apiStore/music';
 
 export const HomePage = () => {
+  const history = useHistory();
+
   const [musicList, setMusicList] = useState([]);
   const [newSongs, setNewSongs] = useState([]);
   
-  // todo 根据子组件的 activeIndex 更改路由
+  // todo 根据子组件的 activeIndex 更改路由 (注意：这里使用路由其实是不太合理的，这里是想试一下路由的函数跳转)
   const changeRouteByTabActiveIndex = (index) => {
-    console.log( '父组件接到变化了', index );
+    const homeRouteMap = {
+      '0': '/',
+      '1': '/hot',
+      '2': '/search'
+    }
+    let targetPath = homeRouteMap[index];
+    if (history.location.pathname === targetPath) return ;
+    history.replace( targetPath );
   }
 
   // todo 请求推荐歌曲
@@ -51,21 +63,34 @@ export const HomePage = () => {
       <div className="top-tab-cmpt">
         <TopTab changeRouteByTabActiveIndex={changeRouteByTabActiveIndex} />
       </div>
+      
+      {/* // ? 推荐音乐 tab 内容 */}
+      <Route path="/" exact>
+        {/* 推荐歌曲组件 */}
+        <div className="recommend-list-cmpt">
+          <RecommendList musicList={musicList} />
+        </div>
 
-      {/* 推荐歌曲组件 */}
-      <div className="recommend-list-cmpt">
-        <RecommendList musicList={musicList} />
-      </div>
+        {/* 最新音乐 */}
+        <div className="new-music-area">
+          <ListTitle title="最新音乐" />
+          {
+            newSongs && newSongs.map(item => {
+              return <NewMusicItem key={item.song_id} music={ item } />
+            })
+          }
+        </div>
+      </Route>
 
-      {/* 最新音乐 */}
-      <div className="new-music-area">
-        <ListTitle title="最新音乐" />
-        {
-          newSongs && newSongs.map(item => {
-            return <NewMusicItem key={item.song_id} music={ item } />
-          })
-        }
-      </div>
+      {/* // ? 热歌榜 tab 内容 */}
+      <Route path="/hot" exact>
+        <HotList />
+      </Route>
+
+      {/* // ? 搜索 tab 内容 */}
+      <Route path="/search" exact>
+        搜索
+      </Route>
     </div>
   );
 }

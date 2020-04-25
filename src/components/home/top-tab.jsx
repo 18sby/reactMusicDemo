@@ -8,8 +8,6 @@ export const TopTab = (props) => {
   // todo 设置 tab Index
   const clickTab = (index) => {
     setActiveTabIndex(index);
-    // todo 告诉父组件点击了tab，请求接口，接口要做缓存
-    console.log( 'this.parent', props.changeRouteByTabActiveIndex );
     props.changeRouteByTabActiveIndex(index);
   }
 
