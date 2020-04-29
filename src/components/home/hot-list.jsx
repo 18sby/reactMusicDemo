@@ -5,10 +5,6 @@ import { NewMusicItem } from './newMusicItem';
 import { apiHotSongs } from '../../service/apiStore/music';
 
 export const HotList = () => {
-  useEffect(() => {
-    getHotSongsList();
-  }, []);
-
   const [hotSongList, setHotSongList] = useState([]);
 
   // todo 请求热歌榜
@@ -19,6 +15,10 @@ export const HotList = () => {
       console.log('hotSongList: ', hotSongList);
     }, 2000);
   }
+
+  useEffect(() => {
+    getHotSongsList();
+  }, []);
 
   return (
     <div className="hot-list-container">

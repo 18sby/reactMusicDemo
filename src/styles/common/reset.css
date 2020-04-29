@@ -78,3 +78,7 @@ td:not([align]),
 th:not([align]) {
   text-align: left;
 }
+
+#root {
+  background-color: #fff;
+}

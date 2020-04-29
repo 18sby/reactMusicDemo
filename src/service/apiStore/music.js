@@ -56,3 +56,93 @@ export const apiNewSongs = () => {
     })
   })
 }
+
+// todo 搜索歌曲
+export const apiSearchSong = ({ query = '' }) => {
+  return request({
+    method: 'GET',
+    url: `/?method=baidu.ting.search.catalogSug&query=${query}`
+  }).then(response => {
+    return Promise.resolve({
+      type: SUCCESS,
+      data: response.data
+    });
+  }, error => {
+    return Promise.resolve({
+      type: FAIL,
+      message: error
+    })
+  })
+}
+
+// todo 获取歌曲信息
+export const apiSongInfo = ({ songId = '' }) => {
+  return request({
+    method: 'GET',
+    url: `/?method=baidu.ting.song.play&songid=${songId}`
+  }).then(response => {
+    return Promise.resolve({
+      type: SUCCESS,
+      data: response.data
+    });
+  }, error => {
+    return Promise.resolve({
+      type: FAIL,
+      message: error
+    })
+  })
+}
+
+// todo 获取歌词
+export const apiLRC = ({ songId = '' }) => {
+  return request({
+    method: 'GET',
+    url: `/?method=baidu.ting.song.lry&songid=${songId}`
+  }).then(response => {
+    return Promise.resolve({
+      type: SUCCESS,
+      data: response.data
+    });
+  }, error => {
+    return Promise.resolve({
+      type: FAIL,
+      message: error
+    })
+  })
+}
+
+// todo 获取歌手列表
+export const apiArtists = ({ tingUid = '', limits = 6 }) => {
+  return request({
+    method: 'GET',
+    url: `/?method=baidu.ting.artist.getSongList&tinguid=${tingUid}&limits=${limits}&use_cluster=1&order=2`
+  }).then(response => {
+    return Promise.resolve({
+      type: SUCCESS,
+      data: response.data
+    });
+  }, error => {
+    return Promise.resolve({
+      type: FAIL,
+      message: error
+    })
+  })
+}
+
+// todo 获取播放链接
+export const apiPlaySource = ({ songId = '' }) => {
+  return request({
+    method: 'GET',
+    url: `/?method=baidu.ting.song.play&songid=${songId}`
+  }).then(response => {
+    return Promise.resolve({
+      type: SUCCESS,
+      data: response.data
+    });
+  }, error => {
+    return Promise.resolve({
+      type: FAIL,
+      message: error
+    })
+  })
+}

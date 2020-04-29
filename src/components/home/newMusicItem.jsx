@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import '../../styles/components/home/newMusicItem.scss';
 import '../../styles/common/flex.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,9 +7,19 @@ import { faPlayCircle, faHSquare } from '@fortawesome/free-solid-svg-icons';
 
 export const NewMusicItem = (props) => {
   const { music } = props;
+  const history = useHistory();
+
+  const clickMusic = () => {
+    history.push({
+      pathname: 'play-music',
+      state: {
+        songId: props.music.song_id
+      }
+    })
+  }
 
   return (
-    <div className="new-music-item-container">
+    <div onClick={ clickMusic } className="new-music-item-container">
       <div className="content-box">
         <div className="content f-row-between-c">
           <div className="title f-col-between">
