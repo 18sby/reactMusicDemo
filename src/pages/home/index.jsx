@@ -40,7 +40,6 @@ export const HomePage = () => {
   // todo 请求新歌榜数据
   const getNewSongList = async () => {
     const newSongResponse = await apiRecommendList();
-    console.log('新歌榜: ', newSongResponse);
     setNewSongs( newSongResponse.data.song_list );
   }
   
